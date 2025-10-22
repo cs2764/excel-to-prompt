@@ -187,16 +187,7 @@ section {
     border-color: #3498db;
 }
 
-/* Column selection info */
-.column-info {
-    padding: 8px 15px;
-    background: #e8f5e8;
-    border: 1px solid #c3e6c3;
-    border-radius: 4px;
-    font-weight: 500;
-    color: #2c5530;
-    font-size: 14px;
-}
+
 
 /* Filter controls and components */
 .filter-controls {
@@ -280,54 +271,7 @@ section {
     line-height: 1.4;
 }
 
-/* 列控制按钮 */
-.column-controls {
-    margin-bottom: 15px;
-    display: flex;
-    gap: 10px;
-}
 
-/* 列选择器样式 */
-.column-selector {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-    padding: 15px;
-    background: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-.column-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px;
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-}
-
-.column-item:hover {
-    background: #f0f0f0;
-}
-
-.column-item input[type="checkbox"] {
-    cursor: pointer;
-    transform: scale(1.1);
-}
-
-.column-item label {
-    cursor: pointer;
-    user-select: none;
-    flex: 1;
-    margin: 0;
-    font-weight: 600;
-    color: #1a1a1a;
-}
 
 /* 预览标题区域 */
 .preview-header {
@@ -1398,14 +1342,7 @@ p, span, div {
         align-items: center;
     }
     
-    .column-controls {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .column-selector {
-        grid-template-columns: 1fr;
-    }
+
     
     .filter-controls {
         flex-direction: column;

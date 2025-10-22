@@ -1,6 +1,6 @@
 {
   "name": "excel-prompt-generator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Pure frontend tool for generating AI prompts from Excel data. Completely offline, no server required.",
   "main": "index.html",
   "scripts": {

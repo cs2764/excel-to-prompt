@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel Prompt Generator v1.0</title>
+    <title>Excel Prompt Generator v1.1</title>
     <meta name="description" content="Pure frontend tool for generating AI prompts from Excel data. Completely offline, no server required.">
     <meta name="keywords" content="excel, prompt generator, AI, offline, frontend, data processing">
     <meta name="author" content="Excel Prompt Generator Team">
-    <meta name="version" content="1.0">
+    <meta name="version" content="1.1">
     <meta name="release-date" content="2025-10-21">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="custom_hide.css">
@@ -16,7 +16,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>Excel Prompt Generator <span class="version">v1.0</span></h1>
+            <h1>Excel Prompt Generator <span class="version">v1.1</span></h1>
             <p>Generate AI prompts from Excel data - No API calls, offline operation</p>
         </header>
 
@@ -39,8 +39,8 @@
                 <div class="instruction-step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Select Worksheet & Columns</h3>
-                        <p>Choose which worksheet to process, then select the columns you want to include in your analysis. You can select all or deselect specific columns as needed.</p>
+                        <h3>Select Worksheet</h3>
+                        <p>Choose which worksheet to process from your Excel file. All columns will be preserved in the output.</p>
                     </div>
                 </div>
 
@@ -99,7 +99,7 @@
                 <div class="instruction-tips">
                     <h3>💡 Pro Tips</h3>
                     <ul>
-                        <li>Use the data preview to verify your column selections and filters before generating prompts.</li>
+                        <li>Use the data preview to verify your data and filters before generating prompts.</li>
                         <li>Click on any ID in the ID list to preview how its data will be formatted in the prompt.</li>
                         <li>The "Copy ID Data as Markdown" button lets you quickly copy formatted data for testing.</li>
                         <li>Export your prompt settings to files for backup or sharing with team members.</li>
@@ -152,19 +152,7 @@
                     </div>
                 </section>
 
-                <!-- Column Selection Section -->
-                <section class="column-section" id="columnSection" style="display: none;">
-                    <h3>Column Selection</h3>
-                    <p class="usage-tips">🗂️ Check/uncheck columns to include or exclude them. Use buttons below to select or deselect all at once.</p>
-                    <div class="column-controls">
-                        <button id="selectAllColsBtn" class="btn btn-secondary">Select All</button>
-                        <button id="deselectAllColsBtn" class="btn btn-secondary">Deselect All Columns</button>
-                        <span id="columnInfo" class="column-info">All columns selected</span>
-                    </div>
-                    <div class="column-selector" id="columnSelector">
-                        <!-- Dynamic column selector will be populated here -->
-                    </div>
-                </section>
+
 
                 <!-- ID Column Selection and Grouping -->
                 <section class="id-grouping-section" id="idGroupingSection" style="display: none;">
@@ -447,7 +435,7 @@
         <footer>
             <p>Pure frontend implementation - No server, No API calls, All data stays local</p>
             <p class="footer-meta">
-                <span>v1.0</span> • 
+                <span>v1.1</span> • 
                 <span>Released October 21, 2025</span> • 
                 <span>MIT License</span> • 
                 <a href="https://github.com/excel-prompt-generator/excel-prompt-generator" target="_blank">Open Source</a>

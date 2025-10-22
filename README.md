@@ -2,6 +2,14 @@
 
 [中文文档](#中文文档) | [English Documentation](#english-documentation)
 
+## 🎉 What's New in v1.1
+
+- **🎯 Simplified Interface**: Removed redundant Column Selection feature for cleaner user experience
+- **⚡ Improved Workflow**: Streamlined data processing from 5 steps to 4 steps
+- **🔄 Enhanced Consistency**: Preview and output now perfectly aligned - what you see is what you get
+- **🚀 Optimized Performance**: Reduced code complexity and improved maintainability
+- **🛡️ Better Data Integrity**: All original columns always preserved in output
+
 ---
 
 ## English Documentation
@@ -39,11 +47,10 @@ Open `index.html` directly in your browser.
 
 **Step 2: Configure Data Processing**
 
-1. **Column Selection**: Check columns to include in output
-2. **ID Column**: Select column for grouping records
-3. **ID Filtering**: Choose which IDs to process
-4. **Prompt Data Columns**: Select columns to include in prompts
-5. **Row Filters** (optional): Add conditions to filter data rows
+1. **ID Column**: Select column for grouping records
+2. **ID Filtering**: Choose which IDs to process
+3. **Prompt Data Columns**: Select columns to include in prompts
+4. **Row Filters** (optional): Add conditions to filter data rows
 
 **Step 3: Configure Prompts**
 
@@ -137,13 +144,21 @@ Configure up to 3 questions in JSON format:
 
 ### Version Information
 
-**Version**: 1.0  
+**Version**: 1.1  
 **Release Date**: October 21, 2025  
 **License**: MIT License
 
 ---
 
 ## 中文文档
+
+## 🎉 v1.1 版本更新
+
+- **🎯 界面简化**：移除了冗余的列选择功能，提供更清洁的用户体验
+- **⚡ 工作流程改进**：将数据处理步骤从5步简化为4步
+- **🔄 一致性增强**：预览与输出现在完全一致 - 所见即所得
+- **🚀 性能优化**：减少了代码复杂度，提高了可维护性
+- **🛡️ 数据完整性**：输出始终保留所有原始数据列
 
 ### 项目概述
 
@@ -178,11 +193,10 @@ Excel Prompt Generator 是一个纯前端的 Excel 数据提示词生成工具�
 
 **第二步：配置数据处理**
 
-1. **列选择**：勾选要包含在输出中的列
-2. **ID 列**：选择用于分组记录的列
-3. **ID 筛选**：选择要处理的 ID
-4. **提示词数据列**：选择要包含在提示词中的列
-5. **行筛选**（可选）：添加条件筛选数据行
+1. **ID 列**：选择用于分组记录的列
+2. **ID 筛选**：选择要处理的 ID
+3. **提示词数据列**：选择要包含在提示词中的列
+4. **行筛选**（可选）：添加条件筛选数据行
 
 **第三步：配置提示词**
 
@@ -276,7 +290,7 @@ excel-prompt-generator/
 
 ### 版本信息
 
-**版本**：1.0  
+**版本**：1.1  
 **发布日期**：2025 年 10 月 21 日  
 **许可证**：MIT 许可证
 

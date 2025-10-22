@@ -1,9 +1,9 @@
 /**
- * Excel Prompt Generator v1.0
+ * Excel Prompt Generator v1.1
  * Pure frontend application for generating AI prompts from Excel data
  * No API calls - Completely offline operation
  * 
- * @version 1.0
+ * @version 1.1
  * @date 2025-10-21
  * @license MIT
  * @author Excel Prompt Generator Team
@@ -19,8 +19,7 @@ class ExcelPromptGenerator {
         this.filteredData = null;
         this.originalFileName = '';
         
-        // Column selection state
-        this.selectedColumns = [];
+
         
         // Filter state
         this.filters = [];
@@ -78,9 +77,7 @@ class ExcelPromptGenerator {
         // Sheet selection
         document.getElementById('sheetSelect').addEventListener('change', () => this.handleSheetChange());
         
-        // Column selection
-        document.getElementById('selectAllColsBtn').addEventListener('click', () => this.toggleAllColumns(true));
-        document.getElementById('deselectAllColsBtn').addEventListener('click', () => this.toggleAllColumns(false));
+
         
         // ID column selection
         document.getElementById('idColumnSelect').addEventListener('change', () => this.handleIdColumnChange());
@@ -244,7 +241,6 @@ class ExcelPromptGenerator {
         document.getElementById('tabNavigation').style.display = 'flex';
         document.getElementById('uploadSection').style.display = 'none';
         document.getElementById('sheetSection').style.display = 'block';
-        document.getElementById('columnSection').style.display = 'block';
         document.getElementById('idGroupingSection').style.display = 'block';
         document.getElementById('filterSection').style.display = 'block';
         document.getElementById('previewSection').style.display = 'block';
@@ -277,7 +273,8 @@ class ExcelPromptGenerator {
             if (this.currentData.length > 0) {
                 this.originalData = this.currentData.slice();
                 this.clearAllFilters();
-                this.createColumnSelector();
+                this.createAiColumnSelector();
+                this.populateIdColumnSelector();
                 this.applyFilters();
             } else {
                 this.showMessage('No data in the selected worksheet', 'error');
@@ -285,67 +282,7 @@ class ExcelPromptGenerator {
         }
     }
     
-    // ==================== Column Selection ====================
-    
-    createColumnSelector() {
-        if (!this.currentData || this.currentData.length === 0) return;
-        
-        const columnSelector = document.getElementById('columnSelector');
-        columnSelector.innerHTML = '';
-        
-        const headers = this.currentData[0] || [];
-        this.selectedColumns = new Array(headers.length).fill(true);
-        
-        headers.forEach((header, index) => {
-            const columnItem = document.createElement('div');
-            columnItem.className = 'column-item';
-            
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.id = `column-${index}`;
-            checkbox.checked = true;
-            checkbox.addEventListener('change', (e) => {
-                this.selectedColumns[index] = e.target.checked;
-                this.applyFilters();
-            });
-            
-            const label = document.createElement('label');
-            label.htmlFor = `column-${index}`;
-            label.textContent = header || `Column ${index + 1}`;
-            
-            columnItem.appendChild(checkbox);
-            columnItem.appendChild(label);
-            columnSelector.appendChild(columnItem);
-        });
-        
-        this.updateColumnInfo();
-        this.createAiColumnSelector();
-        this.populateIdColumnSelector();
-    }
-    
-    toggleAllColumns(select) {
-        const checkboxes = document.querySelectorAll('#columnSelector input[type="checkbox"]');
-        checkboxes.forEach((checkbox, index) => {
-            checkbox.checked = select;
-            this.selectedColumns[index] = select;
-        });
-        this.updateColumnInfo();
-        this.applyFilters();
-    }
-    
-    updateColumnInfo() {
-        const columnInfo = document.getElementById('columnInfo');
-        const selectedCount = this.selectedColumns.filter(s => s).length;
-        const totalCount = this.selectedColumns.length;
-        
-        if (selectedCount === totalCount) {
-            columnInfo.textContent = 'All columns selected';
-        } else if (selectedCount === 0) {
-            columnInfo.textContent = 'No columns selected';
-        } else {
-            columnInfo.textContent = `${selectedCount} of ${totalCount} columns selected`;
-        }
-    }
+
     
     // ==================== ID Column & Grouping ====================
     
@@ -750,10 +687,8 @@ class ExcelPromptGenerator {
             }
         }
         
-        // Apply column selection
-        this.filteredData = data.map(row => 
-            row.filter((cell, index) => this.selectedColumns[index])
-        );
+        // Use all columns for filtered data
+        this.filteredData = data;
         
         this.updateFilterInfo();
         this.updatePreviewTable();
