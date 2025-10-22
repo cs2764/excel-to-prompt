@@ -1,0 +1,416 @@
+/* 
+ * UI Improvements - Better Color Contrast for Processing Progress
+ * 改进处理进度界面的颜色对比度 - 浅色背景+深色字体优化版本
+ */
+
+/* Enforce light theme and dark text for progress areas used in index.html */
+.progress-panel-header {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.progress-panel-content {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+}
+
+/* Actual containers in index.html */
+.overall-progress,
+.request-progress,
+.current-task,
+.time-tracking,
+.api-statistics,
+.token-statistics,
+.processing-log {
+    background: #f8f9fa !important;
+    color: #1a1a1a !important;
+    border: 1px solid #dee2e6 !important;
+}
+
+.progress-header .progress-title,
+.progress-details,
+.task-label,
+.stat-label,
+.token-stat-label,
+.time-label {
+    color: #1a1a1a !important;
+}
+
+.progress-percentage {
+    color: #1a5490 !important;
+    background: #e3f2fd !important;
+}
+
+/* Progress bar containers */
+.progress-bar-container {
+    background: #e9ecef !important;
+}
+.progress-bar {
+    background: linear-gradient(90deg, #007bff, #0056b3) !important;
+}
+.progress-bar.progress-bar-secondary {
+    background: linear-gradient(90deg, #28a745, #1e7e34) !important;
+}
+
+/* Status message content readability */
+.status-message-container {
+    background: #f8f9fa !important;
+}
+.status-message-content {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+}
+
+/* ========== Real-Time Processing Progress Panel ========== */
+
+/* Progress panel background - 浅色背景提高可读性 */
+.progress-monitoring-panel {
+    background: #ffffff !important;  /* 纯白色背景 */
+    border: 2px solid #4a90e2 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Progress panel header - 深色字体 */
+.progress-monitoring-panel h4 {
+    color: #1a1a1a !important;  /* 深色字体 */
+    font-weight: 600 !important;
+}
+
+/* Patient Progress Section - 浅色背景 */
+.patient-progress-section {
+    background: #f8f9fa !important;  /* 浅灰色背景 */
+    border: 1px solid #dee2e6 !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    margin-bottom: 15px !important;
+}
+
+.patient-progress-section h5 {
+    color: #1a1a1a !important;  /* 深色字体 */
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+}
+
+/* Progress percentage text - 深色字体 */
+.progress-percentage {
+    color: #1a5490 !important;  /* 更深的蓝色提高对比度 */
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+}
+
+/* Request Progress Section - 浅色背景 */
+.request-progress-section {
+    background: #f8f9fa !important;  /* 浅灰色背景 */
+    border: 1px solid #dee2e6 !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    margin-bottom: 15px !important;
+}
+
+.request-progress-section h5 {
+    color: #1a1a1a !important;  /* 深色字体 */
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+}
+
+/* Progress bars - 浅色容器背景 */
+.progress-bar-container {
+    background: #e9ecef !important;  /* 浅灰色背景 */
+    border: none !important;
+    height: 24px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #007bff, #0056b3) !important;  /* 蓝色渐变 */
+    height: 100% !important;
+    transition: width 0.5s ease-in-out !important;
+    box-shadow: 0 2px 4px rgba(0,123,255,0.3) !important;
+}
+
+/* Current Task Section - 优化浅色背景 */
+.current-task-section {
+    background: #f8f9fa !important;  /* 浅灰色背景 */
+    border: 1px solid #dee2e6 !important;
+    padding: 20px !important;
+    border-radius: 8px !important;
+    margin-bottom: 15px !important;
+}
+
+.current-task-section h5 {
+    color: #1a1a1a !important;  /* 深色字体 */
+    font-weight: 600 !important;
+    margin-bottom: 15px !important;
+}
+
+/* Current Patient ID - 醒目的深色 */
+.current-patient-id {
+    color: #0c5460 !important;  /* 深青色 */
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+}
+
+/* Query Progress - 深色文字 */
+.query-progress-text {
+    color: #721c24 !important;  /* 深红色 */
+    font-weight: 600 !important;
+}
+
+/* Current Status - 白色背景深色文字 */
+.current-status-text {
+    color: #1a1a1a !important;  /* 深色文字 */
+    background: white !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    border-left: 4px solid #4a90e2 !important;
+    margin-top: 10px !important;
+    font-weight: 500 !important;
+}
+
+/* Stage Information Boxes - 优化可读性 */
+.stage-info-box {
+    background: #ffffff !important;  /* 白色背景 */
+    border: 2px solid #dee2e6 !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+    min-width: 120px !important;
+}
+
+.stage-info-box .stage-icon {
+    font-size: 2em !important;
+    margin-bottom: 10px !important;
+}
+
+.stage-info-box .stage-time {
+    color: #1a1a1a !important;  /* 深色文字 */
+    font-size: 1.3em !important;
+    font-weight: bold !important;
+}
+
+.stage-info-box .stage-label {
+    color: #495057 !important;  /* 更深的灰色 */
+    font-size: 0.9em !important;
+    font-weight: 600 !important;
+    margin-top: 5px !important;
+}
+
+/* API Statistics Section - 优化可读性 */
+.api-statistics-section {
+    background: #f8f9fa !important;  /* 浅灰色背景 */
+    border: 1px solid #dee2e6 !important;
+    padding: 20px !important;
+    border-radius: 8px !important;
+    margin-bottom: 15px !important;
+}
+
+.api-statistics-section h5 {
+    color: #1a1a1a !important;  /* 深色标题 */
+    font-weight: 600 !important;
+    margin-bottom: 15px !important;
+}
+
+.api-stat-item {
+    text-align: center !important;
+    padding: 10px !important;
+}
+
+.api-stat-label {
+    color: #495057 !important;  /* 更深的灰色 */
+    font-size: 0.85em !important;
+    font-weight: 600 !important;
+    display: block !important;
+    margin-bottom: 5px !important;
+}
+
+.api-stat-value {
+    color: #1a1a1a !important;  /* 深色数值 */
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+}
+
+.api-stat-value.success {
+    color: #28a745 !important;  /* 绿色成功 */
+}
+
+.api-stat-value.failed {
+    color: #dc3545 !important;  /* 红色失败 */
+}
+
+/* Token Usage Statistics Section - 优化可读性 */
+.token-statistics-section {
+    background: #f8f9fa !important;  /* 浅灰色背景 */
+    border: 1px solid #dee2e6 !important;
+    border-left: 4px solid #17a2b8 !important;
+    padding: 20px !important;
+    border-radius: 8px !important;
+    margin-bottom: 15px !important;
+}
+
+.token-statistics-section h5 {
+    color: #1a1a1a !important;  /* 深色标题 */
+    font-weight: 600 !important;
+    margin-bottom: 15px !important;
+}
+
+.token-stat-box {
+    background: #ffffff !important;  /* 白色背景 */
+    border: 1px solid #dee2e6 !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+}
+
+.token-stat-value {
+    color: #0c5460 !important;  /* 深青色 */
+    font-size: 1.8em !important;
+    font-weight: bold !important;
+}
+
+.token-stat-label {
+    color: #495057 !important;  /* 深灰色文字 */
+    font-size: 0.9em !important;
+    font-weight: 600 !important;
+    margin-top: 5px !important;
+}
+
+/* Processing Log Section - 优化可读性 */
+.processing-log-section {
+    background: #f8f9fa !important;  /* 浅灰色背景 */
+    border: 1px solid #dee2e6 !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+}
+
+.processing-log-section h5 {
+    color: #1a1a1a !important;  /* 深色标题 */
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+}
+
+.log-container {
+    background: #f8f9fa !important;  /* Light gray background */
+    border: 1px solid #dee2e6 !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    max-height: 300px !important;
+    overflow-y: auto !important;
+    font-family: 'Courier New', monospace !important;
+}
+
+.log-entry {
+    padding: 5px 10px !important;
+    margin-bottom: 5px !important;
+    border-radius: 3px !important;
+    font-size: 0.9em !important;
+}
+
+.log-entry.info {
+    color: #2c3e50 !important;  /* Dark text */
+    background: #e8f4f8 !important;  /* Light blue background */
+    border-left: 3px solid #3498db !important;
+}
+
+.log-entry.success {
+    color: #155724 !important;  /* Dark green text */
+    background: #d4edda !important;  /* Light green background */
+    border-left: 3px solid #28a745 !important;
+}
+
+.log-entry.warning {
+    color: #856404 !important;  /* Dark yellow text */
+    background: #fff3cd !important;  /* Light yellow background */
+    border-left: 3px solid #ffc107 !important;
+}
+
+.log-entry.error {
+    color: #721c24 !important;  /* Dark red text */
+    background: #f8d7da !important;  /* Light red background */
+    border-left: 3px solid #dc3545 !important;
+}
+
+/* Control Buttons */
+.progress-control-buttons {
+    background: #ffffff !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+    margin-top: 15px !important;
+}
+
+.progress-control-buttons .btn {
+    margin: 0 5px !important;
+    min-width: 100px !important;
+}
+
+/* Auto-scroll checkbox */
+.auto-scroll-control {
+    display: inline-flex !important;
+    align-items: center !important;
+    margin-left: 15px !important;
+}
+
+.auto-scroll-control input[type="checkbox"] {
+    margin-right: 5px !important;
+}
+
+.auto-scroll-control label {
+    color: #2c3e50 !important;
+    font-weight: normal !important;
+    margin: 0 !important;
+}
+
+/* ========== Responsive Design ========== */
+
+@media (max-width: 768px) {
+    .stage-info-box {
+        min-width: 80px !important;
+        padding: 10px !important;
+    }
+    
+    .stage-info-box .stage-time {
+        font-size: 1.1em !important;
+    }
+    
+    .token-stat-value {
+        font-size: 1.4em !important;
+    }
+}
+
+/* ========== Animation ========== */
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.progress-fill {
+    animation: pulse 2s ease-in-out infinite !important;
+}
+
+/* ========== Scrollbar Styling ========== */
+
+.log-container::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+.log-container::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 4px !important;
+}
+
+.log-container::-webkit-scrollbar-thumb {
+    background: #888 !important;
+    border-radius: 4px !important;
+}
+
+.log-container::-webkit-scrollbar-thumb:hover {
+    background: #555 !important;
+}

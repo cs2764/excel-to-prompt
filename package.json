@@ -1,0 +1,59 @@
+{
+  "name": "excel-prompt-generator",
+  "version": "1.0.0",
+  "description": "Pure frontend tool for generating AI prompts from Excel data. Completely offline, no server required.",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Open index.html in your browser to start the application'",
+    "serve": "python -m http.server 8000",
+    "serve-node": "npx http-server -p 8000"
+  },
+  "keywords": [
+    "excel",
+    "prompt-generator",
+    "ai",
+    "offline",
+    "frontend",
+    "data-processing",
+    "javascript",
+    "html",
+    "css",
+    "sheetjs"
+  ],
+  "author": "Excel Prompt Generator Team",
+  "license": "MIT",
+  "homepage": "https://github.com/excel-prompt-generator/excel-prompt-generator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/excel-prompt-generator/excel-prompt-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/excel-prompt-generator/excel-prompt-generator/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "Chrome >= 90",
+    "Edge >= 90",
+    "Firefox >= 88",
+    "Safari >= 14"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "files": [
+    "index.html",
+    "app.js",
+    "styles.css",
+    "custom_hide.css",
+    "ui_improvements.css",
+    "libs/",
+    "prompts/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "config": {
+    "port": 8000
+  }
+}

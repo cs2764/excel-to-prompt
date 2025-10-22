@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Prompt Generator v1.0</title>
+    <meta name="description" content="Pure frontend tool for generating AI prompts from Excel data. Completely offline, no server required.">
+    <meta name="keywords" content="excel, prompt generator, AI, offline, frontend, data processing">
+    <meta name="author" content="Excel Prompt Generator Team">
+    <meta name="version" content="1.0">
+    <meta name="release-date" content="2025-10-21">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="custom_hide.css">
+    <link rel="stylesheet" href="ui_improvements.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Excel Prompt Generator <span class="version">v1.0</span></h1>
+            <p>Generate AI prompts from Excel data - No API calls, offline operation</p>
+        </header>
+
+        <!-- Usage Instructions Section -->
+        <section class="instructions-section" id="instructionsSection">
+            <div class="instructions-header">
+                <h2>📖 How to Use This Tool</h2>
+                <button id="toggleInstructionsBtn" class="btn btn-sm btn-secondary">Show Instructions</button>
+            </div>
+            
+            <div id="instructionsContent" class="instructions-content hidden">
+                <div class="instruction-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Upload Your Excel File</h3>
+                        <p>Click "Choose File" or drag and drop your .xlsx file into the upload area. The file is processed entirely in your browser - no data is sent to any server.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Select Worksheet & Columns</h3>
+                        <p>Choose which worksheet to process, then select the columns you want to include in your analysis. You can select all or deselect specific columns as needed.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Choose ID Column for Grouping</h3>
+                        <p>Select a column that contains unique identifiers (like Patient ID, Case Number, etc.). The tool will group all rows with the same ID together for prompt generation.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Select Columns for Prompts</h3>
+                        <p>Choose which columns should be included in the generated prompts. These are the data fields that will be sent to AI for analysis.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Configure Prompts (Optional)</h3>
+                        <p>Switch to the "Prompt Settings" tab to customize your system prompt and up to 3 user questions. These settings are saved automatically in your browser.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>Apply Filters (Optional)</h3>
+                        <p>Add filters to process only specific rows. You can filter by any column value using conditions like "equals", "contains", "greater than", etc.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-step">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <h3>Generate & Download</h3>
+                        <p>Click "Generate Prompts" to create your output file. The tool will generate prompts for each unique ID and download an Excel file with your original data plus new prompt columns.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-features">
+                    <h3>✨ Key Features</h3>
+                    <ul>
+                        <li><strong>100% Offline:</strong> All processing happens in your browser. No internet connection needed after loading the page.</li>
+                        <li><strong>Privacy First:</strong> Your data never leaves your computer. No uploads, no API calls, no tracking.</li>
+                        <li><strong>Flexible Grouping:</strong> Group multiple rows by ID to create comprehensive prompts from related data.</li>
+                        <li><strong>Multiple Output Formats:</strong> Generates prompts with and without system prompts, plus individual question prompts.</li>
+                        <li><strong>Data Preview:</strong> See exactly what data will be processed before generating prompts.</li>
+                        <li><strong>Auto-Save Settings:</strong> Your prompt configurations are saved automatically in browser storage.</li>
+                    </ul>
+                </div>
+
+                <div class="instruction-tips">
+                    <h3>💡 Pro Tips</h3>
+                    <ul>
+                        <li>Use the data preview to verify your column selections and filters before generating prompts.</li>
+                        <li>Click on any ID in the ID list to preview how its data will be formatted in the prompt.</li>
+                        <li>The "Copy ID Data as Markdown" button lets you quickly copy formatted data for testing.</li>
+                        <li>Export your prompt settings to files for backup or sharing with team members.</li>
+                        <li>Use filters to process specific subsets of data (e.g., only certain date ranges or categories).</li>
+                        <li>Leave questions blank if you don't need them - the tool will skip empty questions.</li>
+                    </ul>
+                </div>
+
+                <div class="instruction-output">
+                    <h3>📊 Output File Structure</h3>
+                    <p>The generated Excel file will contain:</p>
+                    <ul>
+                        <li><strong>Original columns:</strong> All your source data is preserved</li>
+                        <li><strong>Prompt_Full:</strong> Complete prompt with system prompt + all questions + data</li>
+                        <li><strong>Prompt_NoSystem:</strong> Prompt with questions + data (no system prompt)</li>
+                        <li><strong>Prompt_Q1, Q2, Q3:</strong> Individual prompts for each question + data</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <main>
+            <!-- Tab Navigation -->
+            <nav class="tab-navigation" id="tabNavigation" style="display: none;">
+                <button class="tab-button active" data-tab="data-processing">Data Processing</button>
+                <button class="tab-button" data-tab="prompt-settings">Prompt Settings</button>
+            </nav>
+
+            <!-- Data Processing Tab Content -->
+            <div class="tab-content active" id="data-processing-tab">
+                <!-- File Upload Section -->
+                <section class="upload-section" id="uploadSection">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📊</div>
+                        <h3>Select or Drag Excel File</h3>
+                        <p>Supports .xlsx format</p>
+                        <input type="file" id="fileInput" accept=".xlsx" hidden>
+                        <button id="uploadBtn" class="btn btn-primary">Choose File</button>
+                    </div>
+                </section>
+
+                <!-- Sheet Selection Section -->
+                <section class="sheet-section" id="sheetSection" style="display: none;">
+                    <div class="control-group">
+                        <label for="sheetSelect">Select Worksheet:</label>
+                        <p class="usage-tips">📋 Choose the Excel worksheet you want to process</p>
+                        <select id="sheetSelect" class="form-control">
+                            <!-- Dynamic sheet options will be populated here -->
+                        </select>
+                    </div>
+                </section>
+
+                <!-- Column Selection Section -->
+                <section class="column-section" id="columnSection" style="display: none;">
+                    <h3>Column Selection</h3>
+                    <p class="usage-tips">🗂️ Check/uncheck columns to include or exclude them. Use buttons below to select or deselect all at once.</p>
+                    <div class="column-controls">
+                        <button id="selectAllColsBtn" class="btn btn-secondary">Select All</button>
+                        <button id="deselectAllColsBtn" class="btn btn-secondary">Deselect All Columns</button>
+                        <span id="columnInfo" class="column-info">All columns selected</span>
+                    </div>
+                    <div class="column-selector" id="columnSelector">
+                        <!-- Dynamic column selector will be populated here -->
+                    </div>
+                </section>
+
+                <!-- ID Column Selection and Grouping -->
+                <section class="id-grouping-section" id="idGroupingSection" style="display: none;">
+                    <h3>ID Column Selection & Grouping</h3>
+                    <p class="usage-tips">🔗 Select an ID column to group related records together for prompt generation.</p>
+                    
+                    <div class="id-controls">
+                        <div class="form-group">
+                            <label for="idColumnSelect">Select ID Column:</label>
+                            <select id="idColumnSelect" class="form-control">
+                                <option value="">-- Select ID Column --</option>
+                            </select>
+                            <small class="form-help">Choose a column that contains unique identifiers for grouping data</small>
+                        </div>
+                        
+                        <div id="idStats" class="id-stats" style="display: none;">
+                            <div class="stats-item">
+                                <span class="stats-label">Unique IDs:</span>
+                                <span id="uniqueIdCount" class="stats-value">0</span>
+                            </div>
+                            <div class="stats-item">
+                                <span class="stats-label">Total Rows:</span>
+                                <span id="totalRowsCount" class="stats-value">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="idListContainer" class="id-list-container" style="display: none;">
+                        <h4>ID List & Row Counts</h4>
+                        <div class="id-list-controls">
+                            <button id="selectAllIdsBtn" class="btn btn-secondary btn-sm">Select All IDs</button>
+                            <button id="deselectAllIdsBtn" class="btn btn-secondary btn-sm">Deselect All IDs</button>
+                            <span id="selectedIdInfo" class="selected-id-info">No IDs selected</span>
+                        </div>
+                        <div id="idList" class="id-list">
+                            <!-- Dynamic ID list will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div id="idPreviewContainer" class="id-preview-container" style="display: none;">
+                        <h4>Selected ID Data Preview</h4>
+                        <div class="preview-controls">
+                            <span id="previewIdName" class="preview-id-name"></span>
+                            <button id="copyIdDataBtn" class="btn btn-info btn-sm">Copy ID Data as Markdown</button>
+                        </div>
+                        <div id="idDataPreview" class="id-data-preview">
+                            <!-- Selected ID data preview in Markdown format -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AI Column Selection -->
+                <section class="ai-column-section" id="aiColumnSection" style="display: none;">
+                    <h3>Prompt Data Column Selection</h3>
+                    <p class="usage-tips">📝 Select which columns to include in the generated prompts.</p>
+                    
+                    <div class="ai-column-controls">
+                        <button id="selectAllAiColsBtn" class="btn btn-secondary">Select All Columns</button>
+                        <button id="deselectAllAiColsBtn" class="btn btn-secondary">Deselect All Columns</button>
+                        <span id="aiColumnInfo" class="ai-column-info">No columns selected</span>
+                    </div>
+                    
+                    <div class="ai-column-selector" id="aiColumnSelector">
+                        <!-- Dynamic AI column selection will be populated here -->
+                    </div>
+
+                    <!-- Ready for Prompt Generation Confirmation -->
+                    <div id="aiProcessingConfirmation" class="ai-processing-confirmation" style="display: none;">
+                        <h4>Ready for Prompt Generation</h4>
+                        <div class="confirmation-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">Selected ID Column:</span>
+                                <span id="confirmIdColumn" class="summary-value">None</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Columns for Prompts:</span>
+                                <span id="confirmAiColumns" class="summary-value">None</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Unique IDs to Process:</span>
+                                <span id="confirmIdCount" class="summary-value">0</span>
+                            </div>
+                            <div class="summary-item summary-item-full">
+                                <span class="summary-label">Questions to Use:</span>
+                                <div id="confirmQuestions" class="summary-value summary-questions">
+                                    <p class="no-questions">No questions configured</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="confirmation-actions">
+                            <button id="generatePromptBtn" class="btn btn-success">📝 Generate Prompts</button>
+                            <button id="modifySelectionBtn" class="btn btn-secondary">Modify Settings</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Row Filters Section -->
+                <section class="filter-section" id="filterSection" style="display: none;">
+                    <h3>Row Filters</h3>
+                    <p class="usage-tips">🔍 Add conditions to filter data rows. Configure your filters then click "Apply Filters" to update the preview.</p>
+                    <div class="filter-controls">
+                        <button id="addFilterBtn" class="btn btn-primary">Add Filter</button>
+                        <button id="clearFiltersBtn" class="btn btn-secondary">Clear All Filters</button>
+                        <button id="applyFiltersBtn" class="btn btn-success">Apply Filters</button>
+                        <select id="filterLogicSelect" class="form-control">
+                            <option value="AND">Match ALL filters (AND)</option>
+                            <option value="OR">Match ANY filter (OR)</option>
+                        </select>
+                        <span id="filterInfo" class="filter-info">No filters applied</span>
+                    </div>
+                    <div class="filters-container" id="filtersContainer">
+                        <!-- Dynamic filters will be populated here -->
+                    </div>
+                </section>
+
+                <!-- Data Preview Section -->
+                <section class="preview-section" id="previewSection" style="display: none;">
+                    <h3>Data Preview</h3>
+                    <div class="preview-header">
+                        <p class="usage-tips">👀 Shows first 50 rows of filtered data.</p>
+                        <div id="rowCountInfo" class="row-count-info"></div>
+                    </div>
+                    <div class="table-container">
+                        <table id="previewTable" class="preview-table">
+                            <!-- Dynamic data table will be populated here -->
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Progress Monitoring Panel -->
+                <div id="progressPanel" class="progress-panel" style="display: none;">
+                    <div class="progress-header">
+                        <h4>🔄 Processing Progress</h4>
+                        <button id="minimizeProgressBtn" class="btn btn-sm btn-secondary">−</button>
+                    </div>
+                    
+                    <div id="progressContent" class="progress-content">
+                        <!-- Overall Progress -->
+                        <div class="progress-section">
+                            <div class="progress-label">
+                                <span>Overall Progress</span>
+                                <span id="overallPercentage">0%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div id="overallProgressBar" class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span id="processedCount">0</span> / <span id="totalCount">0</span> IDs processed
+                            </div>
+                        </div>
+                        
+                        <!-- Current Status -->
+                        <div class="status-section">
+                            <h5>Current Status</h5>
+                            <div id="currentStatus" class="status-message">Ready to start...</div>
+                        </div>
+                        
+                        <!-- Processing Log -->
+                        <div class="log-section">
+                            <div class="log-header">
+                                <h5>Processing Log</h5>
+                                <button id="clearLogBtn" class="btn btn-sm btn-secondary">Clear</button>
+                            </div>
+                            <div id="processingLog" class="processing-log"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Completion Summary -->
+                    <div id="completionSummary" class="completion-summary" style="display: none;">
+                        <div class="completion-header">
+                            <span class="completion-icon">✅</span>
+                            <h4>Prompt Generation Completed!</h4>
+                        </div>
+                        <div class="completion-details">
+                            <div class="completion-item">
+                                <span class="completion-label">Total IDs Processed:</span>
+                                <span id="completionTotal" class="completion-value">0</span>
+                            </div>
+                            <div class="completion-item">
+                                <span class="completion-label">Output File:</span>
+                                <span id="completionFilename" class="completion-value">--</span>
+                            </div>
+                            <div class="completion-item">
+                                <span class="completion-label">File Size:</span>
+                                <span id="completionFileSize" class="completion-value">--</span>
+                            </div>
+                            <div class="completion-item">
+                                <span class="completion-label">Total Rows:</span>
+                                <span id="completionRowCount" class="completion-value">--</span>
+                            </div>
+                            <div class="completion-item">
+                                <span class="completion-label">Generated At:</span>
+                                <span id="completionTimestamp" class="completion-value">--</span>
+                            </div>
+                        </div>
+                        <div class="completion-note">
+                            <p>✅ File has been generated successfully!</p>
+                            <p>💡 Click the download button to save the file to your default download folder.</p>
+                            <p style="font-size: 0.9em; color: #6c757d;">📁 File will be saved to your browser's download location (usually "Downloads" folder).</p>
+                        </div>
+                        <div class="completion-actions">
+                            <button id="downloadGeneratedFileBtn" class="btn btn-success btn-large">📥 Download File</button>
+                            <button id="closeCompletionBtn" class="btn btn-secondary">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control Buttons Section -->
+                <section class="controls-section" id="controlsSection" style="display: none;">
+                    <div class="controls">
+                        <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Prompt Settings Tab Content -->
+            <div class="tab-content" id="prompt-settings-tab">
+                <section class="prompt-settings-section">
+                    <h3>Prompt Management</h3>
+                    <p class="usage-tips">✏️ Customize the system prompt and user questions. Changes are automatically saved to your browser.</p>
+                    
+                    <div class="prompt-form">
+                        <div class="form-group">
+                            <label for="systemPrompt">System Prompt</label>
+                            <textarea id="systemPrompt" class="form-control prompt-textarea" 
+                                      placeholder="Enter system prompt here..."></textarea>
+                            <div class="prompt-info">
+                                <span id="systemPromptCount" class="char-count">0 characters</span>
+                                <small class="form-help">💾 Auto-saved to browser storage</small>
+                            </div>
+                        </div>
+                        
+                        <div class="questions-help">
+                            <p>💡 <strong>Tip:</strong> Leave questions empty if you don't need them. Empty questions will be saved as blank.</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userQuestion1">User Question 1</label>
+                            <textarea id="userQuestion1" class="form-control prompt-textarea" 
+                                      placeholder="Enter first question here (optional)"></textarea>
+                            <div class="prompt-info">
+                                <span id="userQuestion1Count" class="char-count">0 characters</span>
+                                <button id="clearQuestion1Btn" class="btn btn-sm btn-secondary">Clear</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userQuestion2">User Question 2</label>
+                            <textarea id="userQuestion2" class="form-control prompt-textarea" 
+                                      placeholder="Enter second question here (optional)"></textarea>
+                            <div class="prompt-info">
+                                <span id="userQuestion2Count" class="char-count">0 characters</span>
+                                <button id="clearQuestion2Btn" class="btn btn-sm btn-secondary">Clear</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userQuestion3">User Question 3</label>
+                            <textarea id="userQuestion3" class="form-control prompt-textarea" 
+                                      placeholder="Enter third question here (optional)"></textarea>
+                            <div class="prompt-info">
+                                <span id="userQuestion3Count" class="char-count">0 characters</span>
+                                <button id="clearQuestion3Btn" class="btn btn-sm btn-secondary">Clear</button>
+                            </div>
+                        </div>
+                        
+                        <div class="prompt-actions">
+                            <button id="savePromptsBtn" class="btn btn-success">💾 Save Prompts</button>
+                            <button id="exportPromptsBtn" class="btn btn-secondary">📥 Export to Files</button>
+                            <button id="loadPromptsBtn" class="btn btn-secondary">🔄 Reload from Files</button>
+                        </div>
+                        <div class="prompt-info" style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                            💡 Prompts are automatically saved to your browser. Use "Export to Files" to backup or share your settings.
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <p>Pure frontend implementation - No server, No API calls, All data stays local</p>
+            <p class="footer-meta">
+                <span>v1.0</span> • 
+                <span>Released October 21, 2025</span> • 
+                <span>MIT License</span> • 
+                <a href="https://github.com/excel-prompt-generator/excel-prompt-generator" target="_blank">Open Source</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Message Box -->
+    <div id="messageBox" class="message-box" style="display: none;"></div>
+
+    <!-- External Libraries -->
+    <script src="libs/xlsx.full.min.js"></script>
+    <!-- Main Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>

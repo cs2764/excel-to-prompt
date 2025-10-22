@@ -1,0 +1,35 @@
+/* 
+ * Custom CSS to hide Markdown-related features
+ * 隐藏Markdown转换相关功能
+ * 保留AI配置等标签页
+ */
+
+/* 隐藏行筛选区域 */
+#filterSection {
+    display: none !important;
+}
+
+/* 隐藏单元格选择控制区域 */
+#selectionSection {
+    display: none !important;
+}
+
+/* 隐藏数据预览表格 */
+#previewSection {
+    display: none !important;
+}
+
+/* 隐藏Markdown输出区域 */
+#outputSection {
+    display: none !important;
+}
+
+/* 隐藏控制按钮区域（Reset按钮等） */
+#controlsSection {
+    display: none !important;
+}
+
+/* 隐藏ID预览容器（Markdown预览） */
+#idPreviewContainer {
+    display: none !important;
+}
