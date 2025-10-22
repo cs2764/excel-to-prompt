@@ -54,9 +54,9 @@ node_modules/
 # Output files (user generated)
 output/*.xlsx
 
-# Sample Excel files (keep for demo)
-# Uncomment to exclude sample files:
-# *.xlsx
+# Sample Excel files - exclude from repository but keep locally
+lab_test_data.xlsx
+lab_test_data - 2.xlsx
 
 # Temporary files
 *.tmp
